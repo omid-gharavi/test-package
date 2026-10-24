@@ -1,6 +1,6 @@
 {
   "name": "@omid-gharavi/test-package",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/omid-gharavi/test-package.git"
