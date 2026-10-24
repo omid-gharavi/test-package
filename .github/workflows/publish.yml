@@ -4,6 +4,12 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      publish_to_npm:
+        description: Publish to npmjs.org (leave unchecked for GitHub Packages retries)
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build-and-publish:
@@ -30,6 +36,7 @@ jobs:
 
       # --- 1. PUBLISH TO PUBLIC NPM ---
       - name: Publish to Public NPM
+        if: github.event_name == 'release' || inputs.publish_to_npm
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/omid-gharavi/test-package.git"
+    "url": "git+https://github.com/omid-gharavi/test-package.git"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
