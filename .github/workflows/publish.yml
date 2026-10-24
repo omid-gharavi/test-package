@@ -1,8 +1,9 @@
-name: Publish Package to GitHub Packages
+name: Publish to Both Registries
 
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 jobs:
   build-and-publish:
@@ -19,15 +20,26 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
-          registry-url: "https://npm.pkg.github.com"
+          registry-url: "https://registry.npmjs.org" # Default to public npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build package (Generates JS and Types)
+      - name: Build package
         run: npm run build
 
+      # --- 1. PUBLISH TO PUBLIC NPM ---
+      - name: Publish to Public NPM
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # --- 2. PUBLISH TO GITHUB PACKAGES ---
       - name: Publish to GitHub Packages
-        run: npm publish
+        run: |
+          # Temporarily override registry config for GitHub
+          echo "@omid-gharavi:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
+          npm publish --registry=https://npm.pkg.github.com
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
