@@ -1,6 +1,13 @@
 {
-  "name": "my-nextjs-package",
+  "name": "@omid-gharavi/test-package",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omid-gharavi/test-package.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -15,8 +22,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.tsx --format cjs,esm --dts --clean",
-    "prepublishOnly": "npm run build"
+    "build": "tsup src/index.tsx --format cjs,esm --dts --clean"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
